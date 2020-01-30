@@ -71,11 +71,15 @@ func formatValue(key string, meta string, value string) string {
 
 func filterNumber(value string) string {
     r := regexp.MustCompile("[^0-9.]")
-    return r.ReplaceAllString(value, "")
+    numonly := r.ReplaceAllString(value, "")
+    if (numonly == "") {
+        return "0"
+    }
+    return numonly
 }
 
 func metrics(w http.ResponseWriter, r *http.Request) {
-    log.Print("Serving /metrics")
+    //log.Print("Serving /metrics")
 
     var cmd *exec.Cmd
     if (testMode == "1") {
@@ -128,7 +132,7 @@ func metrics(w http.ResponseWriter, r *http.Request) {
 }
 
 func index(w http.ResponseWriter, r *http.Request) {
-    log.Print("Serving /index")
+    //log.Print("Serving /index")
     html := `<!doctype html>
 <html>
     <head>
